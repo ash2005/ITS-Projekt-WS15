@@ -65,23 +65,6 @@ public class EncryptFile {
 		return new CipherOutputStream(os, cipher);
 	}
 	
-	private static InputStream decryptInputStream(InputStream is, PrivateKey privateKey) throws Exception {
-		System.out.println("Read crypted session key ...");
-		
-		byte[] wrappedKey= new byte[512];
-		Cipher cipher = Cipher.getInstance("RSA", "BC");
-		is.read(wrappedKey, 0, 512);
-		
-		System.out.println("Decrypt session key ...");
-		cipher.init(Cipher.UNWRAP_MODE, privateKey);
-		Key key = cipher.unwrap(wrappedKey, "AES", Cipher.SECRET_KEY);		
-		
-		cipher = Cipher.getInstance("AES", "BC");
-		cipher.init(Cipher.DECRYPT_MODE, key);
-		
-		return new CipherInputStream(is, cipher);
-	}
-	
 	private void encryptFile(String sourceFileName, String destinationFileName, PublicKey publicKey) throws Exception {
 		File sourceFile = new File(sourceFileName);
 		File destFile = new File(destinationFileName);
@@ -100,6 +83,23 @@ public class EncryptFile {
 		out.flush();
 		out.close();
 		in.close();
+	}
+	
+	private static InputStream decryptInputStream(InputStream is, PrivateKey privateKey) throws Exception {
+		System.out.println("Read crypted session key ...");
+		
+		byte[] wrappedKey= new byte[512];
+		Cipher cipher = Cipher.getInstance("RSA", "BC");
+		is.read(wrappedKey, 0, 512);
+		
+		System.out.println("Decrypt session key ...");
+		cipher.init(Cipher.UNWRAP_MODE, privateKey);
+		Key key = cipher.unwrap(wrappedKey, "AES", Cipher.SECRET_KEY);		
+		
+		cipher = Cipher.getInstance("AES", "BC");
+		cipher.init(Cipher.DECRYPT_MODE, key);
+		
+		return new CipherInputStream(is, cipher);
 	}
 	
 	private void decryptFile(String sourceFileName, String destinationFileName, PrivateKey privateKey) throws Exception {
