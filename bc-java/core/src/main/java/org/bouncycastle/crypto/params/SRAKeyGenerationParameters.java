@@ -1,5 +1,6 @@
 package org.bouncycastle.crypto.params;
 
+import java.math.BigInteger;
 import java.security.SecureRandom;
 
 import org.bouncycastle.crypto.KeyGenerationParameters;
@@ -8,9 +9,11 @@ public class SRAKeyGenerationParameters
     extends KeyGenerationParameters
 {
     private int certainty;
+    private BigInteger modulus;
 
     public SRAKeyGenerationParameters(
-        SecureRandom    random,
+    	BigInteger      modulus,
+    	SecureRandom    random,
         int             strength,
         int             certainty)
     {
@@ -22,8 +25,14 @@ public class SRAKeyGenerationParameters
         }
         
         this.certainty = certainty;
+        this.modulus = modulus;
     }
 
+    public BigInteger getModulus()
+    {
+        return modulus;
+    }
+    
     public int getCertainty()
     {
         return certainty;

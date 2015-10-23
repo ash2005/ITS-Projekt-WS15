@@ -23,21 +23,24 @@ public class SRAKeyPairGenerator
     {
         this.param = (SRAKeyGenerationParameters)param;
     }
-
+    
     public AsymmetricCipherKeyPair generateKeyPair()
     {
     	
     	AsymmetricCipherKeyPair result = null;
+    	BigInteger n, e, d;
     	
     	int strength = param.getStrength();
-    	int nbitlength = (strength + 1) / 2;
+    	int minbitlength = (strength + 1) / 2;
     	
-    	BigInteger n = chooseRandomPrime(nbitlength);
+    	if (param.getModulus() == null) {
+    		n = chooseRandomPrime(minbitlength);
+    	} else {
+    		n = param.getModulus();
+    	}
     	
-    	BigInteger e = chooseRandomPrime(nbitlength);
-    	
-    	
-    	BigInteger d = e.modInverse(n.subtract(ONE) );
+    	e = chooseRandomPrime(minbitlength);
+    	d = e.modInverse(n.subtract(ONE) );
     	
     	result = new AsymmetricCipherKeyPair(
               new SRAKeyParameters(false, n),

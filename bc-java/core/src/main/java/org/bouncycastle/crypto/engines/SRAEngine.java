@@ -72,7 +72,7 @@ public class SRAEngine
         {
             throw new IllegalStateException("SRA engine not initialised");
         }
-
+        
         return core.convertOutput(core.processBlock(core.convertInput(in, inOff, inLen)));
     }
 }
