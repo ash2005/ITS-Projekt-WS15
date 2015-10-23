@@ -1,4 +1,4 @@
-package Week1;
+package week1;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
