@@ -134,8 +134,8 @@ public class EncryptFile {
 	public void run() throws Exception {
 		keyPair = createKeyPair();
 		
-		encryptFile("/home/konstantin/Pictures/img.jpg", "/home/konstantin/Pictures/encrypted.jpg", keyPair.getPublic());
-		decryptFile("/home/konstantin/Pictures/encrypted.jpg", "/home/konstantin/Pictures/new.jpg", keyPair.getPrivate());
+		encryptFile("/home/konstantin/Pictures/img.png", "/home/konstantin/Pictures/encrypted.png", keyPair.getPublic());
+		decryptFile("/home/konstantin/Pictures/encrypted.png", "/home/konstantin/Pictures/new.png", keyPair.getPrivate());
 		
 	}
 	
