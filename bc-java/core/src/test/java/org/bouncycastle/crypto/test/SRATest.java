@@ -118,6 +118,7 @@ public class SRATest
     public static void main(
         String[]    args)
     {
-        runTest(new SRATest());
+    	runTest(new RSATest());
+    	runTest(new SRATest());
     }
 }
