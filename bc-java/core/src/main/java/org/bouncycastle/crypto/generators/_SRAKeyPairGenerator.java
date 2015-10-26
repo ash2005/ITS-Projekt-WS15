@@ -5,23 +5,23 @@ import java.math.BigInteger;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPairGenerator;
 import org.bouncycastle.crypto.KeyGenerationParameters;
-import org.bouncycastle.crypto.params.SRAKeyGenerationParameters;
-import org.bouncycastle.crypto.params.SRAKeyParameters;
-import org.bouncycastle.crypto.params.SRAPrivateCrtKeyParameters;
+import org.bouncycastle.crypto.params._SRAKeyGenerationParameters;
+import org.bouncycastle.crypto.params._SRAKeyParameters;
+import org.bouncycastle.crypto.params._SRAPrivateCrtKeyParameters;
 
 /**
  * an SRA key pair generator.
  */
-public class SRAKeyPairGenerator
+public class _SRAKeyPairGenerator
     implements AsymmetricCipherKeyPairGenerator
 {
 
-    private SRAKeyGenerationParameters param;
+    private _SRAKeyGenerationParameters param;
     private static final BigInteger ONE = BigInteger.valueOf(1);
     
     public void init(KeyGenerationParameters param)
     {
-        this.param = (SRAKeyGenerationParameters)param;
+        this.param = (_SRAKeyGenerationParameters)param;
     }
     
     public AsymmetricCipherKeyPair generateKeyPair()
@@ -43,8 +43,8 @@ public class SRAKeyPairGenerator
     	d = e.modInverse(n.subtract(ONE) );
     	
     	result = new AsymmetricCipherKeyPair(
-              new SRAKeyParameters(false, n),
-              new SRAPrivateCrtKeyParameters(n, e, d));
+              new _SRAKeyParameters(false, n),
+              new _SRAPrivateCrtKeyParameters(n, e, d));
     	
     	return result;
     	

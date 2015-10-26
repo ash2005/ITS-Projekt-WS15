@@ -2,12 +2,12 @@ package org.bouncycastle.crypto.params;
 
 import java.math.BigInteger;
 
-public class SRAKeyParameters
+public class _SRAKeyParameters
     extends AsymmetricKeyParameter
 {
     private BigInteger      modulus;
 
-    public SRAKeyParameters(
+    public _SRAKeyParameters(
         boolean     isPrivate,
         BigInteger  modulus)
     {

@@ -5,13 +5,13 @@ import java.security.SecureRandom;
 
 import org.bouncycastle.crypto.KeyGenerationParameters;
 
-public class SRAKeyGenerationParameters
+public class _SRAKeyGenerationParameters
     extends KeyGenerationParameters
 {
     private int certainty;
     private BigInteger modulus;
 
-    public SRAKeyGenerationParameters(
+    public _SRAKeyGenerationParameters(
     	BigInteger      modulus,
     	SecureRandom    random,
         int             strength,

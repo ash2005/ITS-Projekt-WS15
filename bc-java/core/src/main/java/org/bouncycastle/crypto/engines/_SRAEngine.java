@@ -7,10 +7,10 @@ import org.bouncycastle.crypto.DataLengthException;
 /**
  * this does your basic RSA algorithm.
  */
-public class SRAEngine
+public class _SRAEngine
     implements AsymmetricBlockCipher
 {
-    private SRACoreEngine core;
+    private _SRACoreEngine core;
 
     /**
      * initialise the RSA engine.
@@ -24,7 +24,7 @@ public class SRAEngine
     {
         if (core == null)
         {
-            core = new SRACoreEngine();
+            core = new _SRACoreEngine();
         }
 
         core.init(forEncryption, param);

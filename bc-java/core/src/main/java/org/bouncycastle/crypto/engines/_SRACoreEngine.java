@@ -3,17 +3,17 @@ package org.bouncycastle.crypto.engines;
 import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.DataLengthException;
 import org.bouncycastle.crypto.params.ParametersWithRandom;
-import org.bouncycastle.crypto.params.SRAKeyParameters;
-import org.bouncycastle.crypto.params.SRAPrivateCrtKeyParameters;
+import org.bouncycastle.crypto.params._SRAKeyParameters;
+import org.bouncycastle.crypto.params._SRAPrivateCrtKeyParameters;
 
 import java.math.BigInteger;
 
 /**
  * this does your basic RSA algorithm.
  */
-class SRACoreEngine
+class _SRACoreEngine
 {
-    private SRAKeyParameters key;
+    private _SRAKeyParameters key;
     private boolean          forEncryption;
 
     /**
@@ -30,11 +30,11 @@ class SRACoreEngine
         {
             ParametersWithRandom    rParam = (ParametersWithRandom)param;
 
-            key = (SRAKeyParameters)rParam.getParameters();
+            key = (_SRAKeyParameters)rParam.getParameters();
         }
         else
         {
-            key = (SRAKeyParameters)param;
+            key = (_SRAKeyParameters)param;
         }
 
         this.forEncryption = forEncryption;
@@ -160,7 +160,7 @@ class SRACoreEngine
 
     public BigInteger processBlock(BigInteger input)
     {
-    	SRAPrivateCrtKeyParameters crtKey = (SRAPrivateCrtKeyParameters)key;
+    	_SRAPrivateCrtKeyParameters crtKey = (_SRAPrivateCrtKeyParameters)key;
     	
     	if (forEncryption) {
     		return input.modPow(
