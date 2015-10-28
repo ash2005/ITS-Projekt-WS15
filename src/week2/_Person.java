@@ -8,11 +8,11 @@ import org.bouncycastle.crypto.generators.SRAKeyPairGenerator;
 import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
 import org.bouncycastle.crypto.params.SRAKeyGenerationParameters;
 
-public class Person {
+public class _Person {
 	private AsymmetricCipherKeyPair keypair;
 	private String randomMsg;
 	
-	public Person(BigInteger p, BigInteger q) {
+	public _Person(BigInteger p, BigInteger q) {
 		// Create Keys
 		SRAKeyPairGenerator keygen = new SRAKeyPairGenerator();
 		keygen.init(new SRAKeyGenerationParameters(
@@ -33,7 +33,7 @@ public class Person {
 		this.keypair = keypair;
 	}
 	
-	public void prepareCoin(Coin x) {
+	public void prepareCoin(_Coin x) {
 		this.randomMsg = x.prepareCoin();
 	}
 

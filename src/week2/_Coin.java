@@ -8,10 +8,11 @@ import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.bouncycastle.crypto.engines.SRAEngine;
 
-public class Coin {
+public class _Coin {
+
 	private byte[] c1, c2;
 	
-	public Coin() {
+	public _Coin() {
 		
 	}
 	
