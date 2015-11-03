@@ -6,6 +6,8 @@ import java.security.SecureRandom;
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.InvalidCipherTextException;
+import org.bouncycastle.crypto.digests.SHA512Digest;
+import org.bouncycastle.crypto.encodings.OAEPEncoding;
 import org.bouncycastle.crypto.engines.RSAEngine;
 import org.bouncycastle.crypto.generators.RSAKeyPairGenerator;
 import org.bouncycastle.crypto.params.RSAKeyGenerationParameters;
@@ -33,11 +35,14 @@ public class PlainRSA {
 		AsymmetricCipherKeyPair keypair = keygen.generateKeyPair();
 
 		// Encryption
-		AsymmetricBlockCipher engEn = new RSAEngine();
+		//AsymmetricBlockCipher engEn = new RSAEngine();
+		AsymmetricBlockCipher engEn = new OAEPEncoding(new RSAEngine(), new SHA512Digest());
+		
+		
 		engEn.init(true, keypair.getPublic());
 
-		// System.out.println(engEn.getInputBlockSize());
-		// System.out.println(engEn.getOutputBlockSize());
+		 System.out.println(engEn.getInputBlockSize());
+		 System.out.println(engEn.getOutputBlockSize());
 
 		try {
 			encrData = engEn.processBlock(data, 0, data.length);
@@ -46,7 +51,9 @@ public class PlainRSA {
 		}
 
 		// Decryption
-		AsymmetricBlockCipher engDe = new RSAEngine();
+		//AsymmetricBlockCipher engDe = new RSAEngine();
+		AsymmetricBlockCipher engDe = new OAEPEncoding(new RSAEngine(), new SHA512Digest());
+		
 		engDe.init(false, keypair.getPrivate());
 
 		try {
