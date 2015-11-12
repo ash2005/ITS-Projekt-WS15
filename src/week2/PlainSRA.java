@@ -6,6 +6,9 @@ import java.security.SecureRandom;
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.InvalidCipherTextException;
+import org.bouncycastle.crypto.digests.SHA512Digest;
+import org.bouncycastle.crypto.encodings.OAEPEncoding;
+import org.bouncycastle.crypto.engines.RSAEngine;
 import org.bouncycastle.crypto.engines.SRAEngine;
 import org.bouncycastle.crypto.generators.SRAKeyPairGenerator;
 import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
@@ -18,6 +21,23 @@ public class PlainSRA {
 		byte[] encrData = null;
 		
 		AsymmetricBlockCipher engEn = new SRAEngine();
+		//AsymmetricBlockCipher engEn = new OAEPEncoding(new SRAEngine(), new SHA512Digest());
+		engEn.init(true, keypair.getPublic());
+
+		try {
+			encrData = engEn.processBlock(input, 0, input.length);
+		} catch (InvalidCipherTextException error) {
+			error.printStackTrace();
+		}
+		
+		return encrData;
+	}
+	
+	public static byte[] encryptOAEP(AsymmetricCipherKeyPair keypair, byte[] input) {
+		byte[] encrData = null;
+		
+		//AsymmetricBlockCipher engEn = new SRAEngine();
+		AsymmetricBlockCipher engEn = new OAEPEncoding(new SRAEngine(), new SHA512Digest());
 		engEn.init(true, keypair.getPublic());
 
 		try {
@@ -33,6 +53,22 @@ public class PlainSRA {
 		byte[] decrData = null;
 		
 		AsymmetricBlockCipher engDe = new SRAEngine();
+		//AsymmetricBlockCipher engDe = new OAEPEncoding(new SRAEngine(), new SHA512Digest());
+		engDe.init(false, keypair.getPrivate());
+
+		try {
+			decrData = engDe.processBlock(input, 0, input.length);
+		} catch (InvalidCipherTextException error) {
+			error.printStackTrace();
+		}
+		return decrData;
+	}
+	
+	public static byte[] decryptOAEP(AsymmetricCipherKeyPair keypair, byte[] input) {
+		byte[] decrData = null;
+		
+		//AsymmetricBlockCipher engDe = new SRAEngine();
+		AsymmetricBlockCipher engDe = new OAEPEncoding(new SRAEngine(), new SHA512Digest());
 		engDe.init(false, keypair.getPrivate());
 
 		try {
@@ -58,7 +94,7 @@ public class PlainSRA {
 				null,
 				null,
 				new SecureRandom(), // prng
-				1024, // strength
+				2048, // strength
 				80// certainty
 		));
 
@@ -69,7 +105,7 @@ public class PlainSRA {
 				((RSAPrivateCrtKeyParameters)keypair1.getPrivate()).getP(),
 				((RSAPrivateCrtKeyParameters)keypair1.getPrivate()).getQ(),
 				new SecureRandom(), // prng
-				1024, // strength
+				2048, // strength
 				80// certainty
 		));
 		
@@ -78,6 +114,7 @@ public class PlainSRA {
 		
 		System.out.println("Key1:\n" +
 				"N: " + ((RSAPrivateCrtKeyParameters)keypair1.getPrivate()).getModulus() + "\n" +
+				+ ((RSAPrivateCrtKeyParameters)keypair1.getPrivate()).getModulus().bitLength() + "\n"+ 
 				"E: " + ((RSAPrivateCrtKeyParameters)keypair1.getPrivate()).getExponent() + "\n" +
 				"P: " + ((RSAPrivateCrtKeyParameters)keypair1.getPrivate()).getP() + "\n" +
 				"Q: " + ((RSAPrivateCrtKeyParameters)keypair1.getPrivate()).getQ() + "\n"
@@ -90,11 +127,11 @@ public class PlainSRA {
 				"Q: " + ((RSAPrivateCrtKeyParameters)keypair2.getPrivate()).getQ() + "\n"
 		);
 		
-		encrData1 = encrypt(keypair1, data);
+		encrData1 = encryptOAEP(keypair1, data);
 		encrData1 = encrypt(keypair2, encrData1);
 		
-		decrData1 = decrypt(keypair1, encrData1);
-		decrData1 = decrypt(keypair2, decrData1);
+		decrData1 = decrypt(keypair2, encrData1);
+		decrData1 = decryptOAEP(keypair1, decrData1);
 		
 		String text0 = Hex.toHexString(data);
 		//String text1 = Hex.toHexString(encrData);
